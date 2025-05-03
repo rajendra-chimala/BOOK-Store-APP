@@ -21,7 +21,7 @@ db.sequelize = sequelize
 db.books = require("./models/book.model")(sequelize,DataTypes);
 db.users =require("./models/user.model")(sequelize,DataTypes);
 
-sequelize.sync({force:true}).then(()=>{
+sequelize.sync({force:false}).then(()=>{
     console.log("Migration Success !");
 })
 
