@@ -1,6 +1,7 @@
 const { books } = require("../DB/connection");
 
 const getAll = async (req, res) => {
+    
     try {
       const data = await books.findAll(); // no destructuring
       res.json({
@@ -42,7 +43,19 @@ const updateBook = (req,res)=>{
     const {id} = req.params;
     const {bookName,bookPrice,bookAuthor} = req.body;
 
-    books.findByIdAndUpdate()
+    
+
+    if(bookName === "" || bookPrice === "" || bookAuthor === "") return res.json({"message":"Atleast one field should be updated !"});
+
+    books.update({
+        bookName,
+        bookPrice,
+        bookAuthor
+    },{
+        where:{
+            id:id
+        }
+    })
 
 
     res.status(200).json({
@@ -53,13 +66,14 @@ const updateBook = (req,res)=>{
 
 
 const deleteBook = async(req,res)=>{
-    const {id} = req.params;
+    const id = req.params.id;
 
-    const deleted = await Todo.destroy({ where: { id } });
+    const deleted = await books.destroy({ where: { id } });
 
     res.status(200).json({
         "message":"Book Deleted successfully !",
-        id
+
+        deleted
     })
 }
 
