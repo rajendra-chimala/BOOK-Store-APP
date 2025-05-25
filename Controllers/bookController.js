@@ -96,4 +96,15 @@ const getBookByID = async (req,res)=>{
 
     res.json({"message":"Get Successfully !",data})
 }
-module.exports = {getAll,addBook,updateBook,deleteBook,getBookByID}
+
+
+const deleteAll = async (req,res)=>{
+    const deleted = await books.destroy({ where: {} });
+
+    res.status(200).json({
+        "message":"All Books Deleted successfully !",
+
+        deleted
+    })
+}
+module.exports = {getAll,addBook,updateBook,deleteBook,getBookByID,deleteAll}
